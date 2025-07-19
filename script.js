@@ -115,7 +115,7 @@
               flex-direction: column;
               align-items: center;
               justify-content: center;
-              position: relative;
+             // position: relative;
             }
             
             /* Typography */
@@ -155,6 +155,7 @@
               flex-direction: column;
               max-width:1120px;
               width: var(--view-width);
+              position:relative
               
             }
             
@@ -250,6 +251,7 @@
               padding: 0.625rem;
               border-radius: var(--borderRadius-50);
               box-shadow: var(--shadow-3);
+              height:max-content;
             }
             
             .fa-star {
