@@ -301,7 +301,16 @@
           transform: translateY(-4px);
           box-shadow: var(--shadow-3);
         }
-        
+        .product-view-detail {
+              color: var(--primary-100);
+              transition: var(--transition);
+            }
+            .product-view-detail:hover {
+              transform: scale(1.05);
+            }
+            .product-view-detail span {
+              padding-left: 0.2rem;
+            }
         @media screen and (min-width: 768px) {
           .product-list {
             grid-template-columns: repeat(2, 1fr);
@@ -363,6 +372,9 @@
                          <div class="product-info">
                             <h3>${product.title}</h3>
                             <p class="price-text">${product.price} TL</p>
+                            <p class="product-view-detail" data-id=${product.id}>
+                            <i class="fa-solid fa-eye"></i><span>View Detail</span>
+                            </p>
                              <button class="price-btn">Add basket</button>
                          </div>
                        
