@@ -162,11 +162,41 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            max-width:1120px;
+    
             width: var(--view-width);
             
           }
+          .container-layout {
+            display: grid;
+            gap: 1rem;
+          }
           
+          
+          .products-wrapper {
+            grid-column: 1 / -1;
+          }
+          
+          .product-basket {
+            grid-column: 1 / -1;
+            width: 100%;
+            background: white;
+            height: max-content;
+            padding: 0.675rem;
+            border-radius: var(--borderRadius-50);
+            box-shadow: var(--shadow-2);
+          }
+          
+          
+          .product-basket .basket-header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+          
+          .basket-header h3{
+            font-weight: 500;
+          }
+
           
           /* Loading Spinner */
           .loading-spinner {
@@ -464,7 +494,19 @@
             .product-list {
               grid-template-columns: repeat(2, 1fr);
             }
-          }
+            .container-layout {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+              }
+            
+              .products-wrapper {
+                grid-column: 1 / span 3;
+              }
+            
+              .product-basket {
+                grid-column: 4 / span 1;
+              }
+            }
           
           @media screen and (min-width: 992px) {
             .product-list {
@@ -486,9 +528,22 @@
         <p>Loading...</p>
         </div>
         
-        <div class="slider"></div>
+        <div class="container-layout">
+          <div class="products-wrapper">
+             <div class="slider"></div>
+          
+            <div class="product-list"></div>
+            </div>
+            <div class="product-basket">
+              <div class="basket-header">
+               <h3>Sepetim</h3>
+              <i class="fa-solid fa-basket-shopping"></i>
+              </div>
+            
+            </div>
+        </div>
         
-        <div class="product-list"></div>
+       
     </div>
     `);
 
@@ -501,8 +556,8 @@
       loading.show();
     }
 
-    fetchRandomUser();
-    function fetchRandomUser() {
+    fetchProducts();
+    function fetchProducts() {
       $.ajax({
         url: `https://fakestoreapi.com/products`,
         method: "GET",
