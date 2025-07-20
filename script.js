@@ -157,6 +157,116 @@ ul {
   list-style: none;
 }
 
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--grey-200);
+    padding: 1rem 2rem;
+    color: white;
+    transition: all 0.3s;
+    transform: var(--transition);
+    border-bottom: 1px solid var(--grey-300);
+    /* position: fixed; */
+    width: 100%;
+    z-index: 1;
+  }
+  
+  .navbar-title {
+    color: var(--grey-600);
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  .navbar-title span {
+    color: var(--primary-100);
+  
+  }
+  
+  
+  .search-product {
+    width: 600px;
+    position: relative;
+  }
+  
+  .input-product {
+    width: 100%;
+    padding: 0.675rem;
+    border: none;
+    border-radius: var(--borderRadius-50);
+    box-shadow: var(--shadow-1);
+    outline: none;
+    background-color:var(--white);
+    color: var(--grey-500);
+  }
+  .input-product:focus {
+    border: 1px solid var(--primary-50);
+  }
+  .fa-basket-shopping {
+    color: var(--primary-100);
+  }
+  .input-product::placeholder{
+color: var(--grey-500);
+}
+
+  .search-result-product {
+    display: none;
+    position: absolute;
+    background-color: var(--white);
+    width: 100%;
+    border-radius: var(--borderRadius-50);
+    margin-top: 1rem;
+    color: black;
+    padding: 0.675rem;
+    box-shadow: var(--shadow-2);
+  }
+  
+  .search-product-item {
+    display: flex;
+    align-items: start;
+    gap: 0.4rem;
+  }
+  .search-product-item img{
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--borderRadius-50);
+  background-color: var(--grey-300);
+  padding: 0.4rem;
+  
+  }
+  
+  .search-item-content h4{
+  color: var(--grey-600);font-weight: 500;
+  padding-bottom: 0.3rem;
+  
+  }
+  
+  .search-item-content .product-category{
+  width: max-content;
+  
+  }
+  
+  .page-title{
+  align-content: flex-start;
+  
+  
+  }
+  h1{
+    font-size: 4rem;
+    font-weight: 600;
+  }
+  
+  h1 span{
+  color: var(--primary-100);
+  }
+  
+  .page-title p{
+  /* padding-left: 1rem; */
+  /* left: 5rem; */
+  font-size: 1.5rem;
+  
+  }
+
 .container {
   display: flex;
   align-items: center;
@@ -164,6 +274,7 @@ ul {
   flex-direction: column;
   /* max-width:1120px; */
   width: var(--view-width);
+  gap:3rem;
 }
 
 .container-layout {
@@ -622,9 +733,33 @@ border-radius: var(--borderRadius-50);
     `);
 
     $("body").html(`
+    
+    
+          <header class="navbar">
+        <p class="navbar-title"> Shop<span>Sayar</span></p>
+  
+       <div class="search-product">
+        <input placeholder="Search product product for ID" type="text" id="product-input" class="input-product"/>
+       
+       <div class="search-result-product">
+       <p class="loading-search">Loading....</p>
+  <div class="search-result"></div>
+       </div>
+       </div>
+       <div>
+        <i class="fa-solid fa-basket-shopping"></i>
+       </div>
+  </header>
+    
+    
+    
      <div class="container">
     
-        <h2 class="title">E-Commerce</h2>
+         <div class="page-title">
+        <h1>Shop<span>Sayar</span></h1>
+        <p>Elevate Your Everyday with Shop Sayar.</p>
+        </div>
+        
         <div class="loading-spinner" id="loading">
         <div class="spinner-animation"></div>
         <p>Loading...</p>
@@ -673,8 +808,61 @@ border-radius: var(--borderRadius-50);
     function removeLocalStorage() {
       localStorage.removeItem("basketProducts");
     }
-
+    // Debounce fonksiyonu
+    function debounce(func, wait) {
+      let timeout;
+      return function () {
+        const context = this;
+        const args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          func.apply(context, args);
+        }, wait);
+      };
+    }
     $(".emptyToBasket").hide();
+
+    // seach ınput
+    $("#product-input").on(
+      "input",
+      debounce(function () {
+        const searchValue = $(this).val().trim();
+        $(this).focus().next().show();
+        if (searchValue !== "" && Number(searchValue)) {
+          $.ajax({
+            url: `https://fakestoreapi.com/products/${searchValue}`,
+            method: "GET",
+            dataType: "json",
+            timeout: 10000,
+            beforeSend: function () {
+              // showLoading();
+              $(".loading-search").show();
+              $(".search-result").empty();
+            },
+            success: function (product) {
+              if (product) {
+                $(".loading-search").hide();
+                let searchProduct = "";
+                searchProduct = `
+              <div class="search-product-item">
+              <img src=${product.image} alt=${product.title} class="search-img"/>
+              <div class="search-item-content">
+              <h4>${product.title}</h4>
+          
+              <p class="price-text">${product.price}$</p>
+              </div>
+              </div>
+              `;
+                $(".search-result").append(searchProduct);
+              }
+            },
+          });
+        } else {
+          $(this).focus().next().hide();
+        }
+      }, 500)
+    );
+
     fetchProducts();
     function fetchProducts() {
       $.ajax({
