@@ -287,38 +287,70 @@ color: var(--grey-500);
  
 }
 
-/* .product-basket {
-  grid-column: 1 / -1;
-  width: 100%;
-  background-color: white;
-  max-height:800px;
-  padding: 0.675rem;
-  border-radius: var(--borderRadius-50);
-  box-shadow: var(--shadow-2);
-} */
+
 
 .product-basket {
   grid-column: 1 / -1;
   width: 100%;
   background-color: white;
-  height: 400px;
-  min-height: 400px;
-  max-height: 800px;
+  height: fit-content;
   overflow-y: auto;
   padding: 0.675rem;
   border-radius: var(--borderRadius-50);
   box-shadow: var(--shadow-2);
- 
 }
 
 .product-basket .basket-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+   padding: 1rem;
 }
 
 .basket-header h3 {
   font-weight: 500;
+  font-size: 1.5rem;
+}
+.basket-header .fa-basket-shopping {
+  font-size: 1.5rem;
+}
+
+
+
+.empty-basket-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  height: 20vh;
+}
+.empty-basket-list .fa-basket-shopping {
+  font-size: 3rem;
+}
+
+.empty-basket-list p {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--grey-500);
+}
+
+.emptyToBasket {
+  background: linear-gradient(45deg, var(--red-50), var(--red-100));
+  border-radius: var(--borderRadius-50);
+  color: var(--white);
+  padding: 0.55rem;
+  border: none;
+  font-size: 0.75rem;
+  width: 100%;
+  transition: (--transition);
+  cursor: pointer;
+}
+
+.emptyToBasket:hover {
+  background: linear-gradient(45deg, var(--red-100), var(--red-50));
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-3);
 }
 
 /* Loading Spinner */
@@ -359,7 +391,8 @@ color: var(--grey-500);
 .product-list {
   display: grid;
   /* grid-template-columns: repeat(4, 1fr); */
-  gap: 1rem;
+  gap: 1rem; 
+  margin-top: 1rem;
 }
 
 /* kard stili */
@@ -719,7 +752,7 @@ border-radius: var(--borderRadius-50);
 
   .product-basket {
     grid-column: 4 / span 1;
-    height: 200px;
+    
   }
 }
 
@@ -781,9 +814,10 @@ border-radius: var(--borderRadius-50);
                <p>Your basket is empty</p>
         </div>
         
-       
-        <button class="emptyToBasket">Empty Basket</button>
+ 
              <div class="basket-list"></div>
+                   
+             <button class="emptyToBasket">Empty Basket</button>
             </div>
         </div>
         
