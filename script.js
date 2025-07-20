@@ -255,7 +255,7 @@ ul {
 
 .product-card {
   width: var(--view-width);
-  max-width: 400px;
+  max-width: 370px;
   border: 0.001rem solid var(--grey-300);
   border-radius: var(--borderRadius-100);
   box-shadow: var(--shadow-2);
@@ -502,7 +502,18 @@ ul {
   height: min-content;
 
 }
+.removeBasket{
+  margin-top: 0.5rem;
+  padding: 0.625rem;
+  background: linear-gradient(45deg, var(--red-50), var(--red-100));
+  border-radius: var(--borderRadius-50);
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  font-size: var(--small-text);
+  transition: var(--transition);
 
+}
 .basket-list .product-card {
    width: 100%;
   height:120px;
@@ -630,6 +641,13 @@ border-radius: var(--borderRadius-50);
                <h3>Sepetim</h3>
               <i class="fa-solid fa-basket-shopping"></i>
               </div>
+                  <div class="empty-basket-list">
+                 <i class="fa-solid fa-basket-shopping"></i>
+               <p>Your basket is empty</p>
+        </div>
+        
+       
+        <button class="emptyToBasket">Empty Basket</button>
              <div class="basket-list"></div>
             </div>
         </div>
@@ -638,7 +656,7 @@ border-radius: var(--borderRadius-50);
     </div>
     `);
     const loading = $("#loading");
-    const productBasket = $(".product-basket")
+    const productBasket = $(".product-basket");
     let basketProducts = localStorage.getItem("basketProducts")
       ? JSON.parse(localStorage.getItem("basketProducts"))
       : [];
@@ -646,13 +664,17 @@ border-radius: var(--borderRadius-50);
     let cloneProduct = null;
     function hideLoading() {
       loading.hide();
-      productBasket.show()
+      productBasket.show();
     }
     function showLoading() {
       loading.show();
-      productBasket.hide()
+      productBasket.hide();
+    }
+    function removeLocalStorage() {
+      localStorage.removeItem("basketProducts");
     }
 
+    $(".emptyToBasket").hide();
     fetchProducts();
     function fetchProducts() {
       $.ajax({
@@ -711,29 +733,43 @@ border-radius: var(--borderRadius-50);
               const productId = $(this).data("id");
               fetchDetailProduct(productId);
             });
-            
-            
-              $(".product-card").on("click", ".addToBasket", function (e) {
+
+            $(".product-card").on("click", ".addToBasket", function (e) {
               console.log(e.target);
-              
 
               const productId = $(this).closest(".product-card").data("id");
               console.log("productId", productId);
               const findProduct = products.find((p) => p.id === productId);
               console.log("product", findProduct);
-              const cloneElement = $(this).closest(".product-card").clone(true)
-              console.log($(".basket-list").length)
-cloneElement.find(".addToBasket").remove();
+              const cloneElement = $(this).closest(".product-card").clone(true);
+              $(".empty-basket-list").hide();
+              $(".emptyToBasket").show();
+              cloneElement.find(".addToBasket").remove();
               $(".basket-list").addBasketProduct({
                 product: findProduct,
                 element: cloneElement,
               });
+
+              $(this)
+                .removeClass("addToBasket")
+                .addClass("removeBasket")
+                .text("Delete basket");
             });
-            
-            
+
+            $(".emptyToBasket").click(function () {
+              $(".basket-list").empty();
+              $(".empty-basket-list").show();
+              $(this).hide();
+              removeLocalStorage();
+
+              $(".removeBasket")
+                .removeClass("removeBasket")
+                .addClass("addToBasket")
+                .text("Add basket");
+            });
             // Clone Property
-             cloneProduct = $(".product-card").clone(true);
-             cloneProduct.find(".addToBasket").remove();
+            cloneProduct = $(".product-card").clone(true);
+            cloneProduct.find(".addToBasket").remove();
             $(".slider").append(cloneProduct);
 
             $(".slider").slick({
@@ -825,10 +861,9 @@ cloneElement.find(".addToBasket").remove();
         },
       });
     }
-    
-    
-    // Plugin 
-        (function ($) {
+
+    // Plugin
+    (function ($) {
       $.fn.addBasketProduct = function (options) {
         const settings = $.extend(
           {
