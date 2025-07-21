@@ -1284,7 +1284,9 @@ width: 100%;
             });
             //"Configuration of adding product to basket and cloning product card."
             $(".product-card").on("click", ".addToBasket", function (e) {
-         
+              const productId = $(this).closest(".product-card").data("id");
+
+              const findProduct = products.find((p) => p.id === productId);
 
               const cloneElement = $(this).closest(".product-card").clone(true);
               $(".empty-basket-list").hide();
