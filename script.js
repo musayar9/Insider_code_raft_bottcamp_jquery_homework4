@@ -323,7 +323,7 @@ color: var(--grey-500);
   justify-content: center;
   flex-direction: column;
   gap: 1rem;
-  height: 20vh;
+  height: 25vh;
 }
 .empty-basket-list .fa-basket-shopping {
   font-size: 3rem;
@@ -646,7 +646,7 @@ color: var(--grey-500);
   height: min-content;
 
 }
-.removeBasket{
+.productInBasket {
   margin-top: 0.5rem;
   padding: 0.625rem;
   background: linear-gradient(45deg, var(--red-50), var(--red-100));
@@ -656,7 +656,10 @@ color: var(--grey-500);
   cursor: pointer;
   font-size: var(--small-text);
   transition: var(--transition);
-
+}
+.productInBasket:disabled{
+opacity: 0.4;
+cursor: not-allowed;
 }
 .basket-list .product-card {
    width: 100%;
@@ -736,6 +739,38 @@ border-radius: var(--borderRadius-50);
   right: 1rem;
   top: 4rem;
 }
+
+/* Success Message */
+
+.message {
+  position: fixed;
+  top: 5rem;
+  right: 2rem;
+  padding: 0.625rem 2rem;
+  font-weight: 500;
+  font-size: 1rem;
+  border-radius: var(--borderRadius-50);
+  box-shadow: var(--shadow-2);
+}
+
+.success-message {
+  background-color: var(--green-200);
+  color: var(--green-100);
+  border: 2px solid var(--green-300);
+}
+
+.fa-check,
+.fa-triangle-exclamation {
+  padding-right: 0.8rem;
+}
+
+/* Error Message */
+.error-message {
+  background-color: var(--red-200);
+  border: 1px solid var(--red-300);
+  color: var(--grey-700);
+}
+
 
 @media screen and (min-width: 768px) {
   .product-list {
@@ -854,6 +889,66 @@ border-radius: var(--borderRadius-50);
         }, wait);
       };
     }
+    
+    
+    
+    
+    
+        function successMessageToastify(message) {
+      const div = $("<div></div>");
+      const icons = $("<i></i>").addClass("fa-solid fa-check");
+      div
+        .addClass("message success-message")
+        .hide()
+        .text(message)
+        .prependTo(".product-list")
+        .fadeIn(500);
+
+      icons.prependTo(".success-message");
+      setTimeout(function () {
+        $(".success-message").fadeOut(500, function () {
+          $(this).remove();
+        });
+      }, 1000);
+    }
+    // Function to hide the success message
+    function successMessageHide() {
+      $(".success-message").hide();
+    }
+    // Function to  the error message toastify
+    function errorMessageToastify(message) {
+      $("#error-message-content")
+        .addClass("message error-message")
+        .text(message)
+        .fadeIn(500);
+      const errorIcons = $("<i></i>").addClass(
+        "fa-solid fa-triangle-exclamation"
+      );
+
+      errorIcons.prependTo(".error-message");
+      setTimeout(function () {
+        $("#error-message-content").fadeOut(500, function () {
+          $(this).hide();
+        });
+      }, 2000);
+    }
+    // Function to check for error messages
+    function errorMessage(xhr) {
+      if (xhr.status === 404) {
+        errorMsg = "404 Not Found";
+      } else if (xhr.status === 500) {
+        errorMsg = "500 Internal Server Error";
+      } else {
+        errorMsg = "Bir hata oluştu";
+      }
+      errorMessageToastify(errorMsg);
+    }
+
+    
+    
+    
+    
+    
     $(".emptyToBasket").hide();
 
     // seach ınput
@@ -889,6 +984,8 @@ border-radius: var(--borderRadius-50);
               `;
                 $(".search-result").append(searchProduct);
               }
+            },error: function (xhr, status, error) {
+              errorMessage(xhr);
             },
           });
         } else {
@@ -967,15 +1064,17 @@ border-radius: var(--borderRadius-50);
               $(".empty-basket-list").hide();
               $(".emptyToBasket").show();
               cloneElement.find(".addToBasket").remove();
+                 successMessageToastify("Product added to basket");
               $(".basket-list").addBasketProduct({
                 product: findProduct,
                 element: cloneElement,
               });
 
-              $(this)
+            $(this)
                 .removeClass("addToBasket")
-                .addClass("removeBasket")
-                .text("Delete basket");
+                .addClass("productInBasket")
+                .attr("disabled", true)
+                .text("Product is in the basket");
             });
 
             $(".emptyToBasket").click(function () {
@@ -983,9 +1082,10 @@ border-radius: var(--borderRadius-50);
               $(".empty-basket-list").show();
               $(this).hide();
               removeLocalStorage();
-
-              $(".removeBasket")
-                .removeClass("removeBasket")
+ successMessageToastify("Your cart is now empty");
+              $(".productInBasket")
+                .removeClass("productInBasket")
+                 .attr("disabled", false)
                 .addClass("addToBasket")
                 .text("Add basket");
             });
@@ -1034,6 +1134,7 @@ border-radius: var(--borderRadius-50);
         error: function (xhr, status, error) {
           hideLoading();
           errorMessage(xhr);
+           successMessageHide();
         },
       });
     }
@@ -1067,7 +1168,7 @@ border-radius: var(--borderRadius-50);
                               </div>
                               <p class="product-description">${product.description}</p>
                               <p class="price-text">${product.price} $</p>
-                              <button class="addToBasket">Add basket</button>
+                              
                          </div>
                  </div>`,
               },
