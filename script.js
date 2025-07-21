@@ -62,9 +62,9 @@ html {
   font-size: 16px;
 }
 
-/* CSS Variables */
+/* CSS Değişkenleri */
 :root {
-  /* Grey Colors */
+ 
   --grey-50: #f8fafc;
   --grey-100: #f1f5f9;
   --grey-200: #e2e8f0;
@@ -74,29 +74,29 @@ html {
   --grey-600: #475569;
   --grey-700: #334155;
 
-  /* Primary Colors */
+ 
   --primary-50: #a29dff;
   --primary-100: #645cff;
   --primary-200: #4f39f6;
 
-  /* Green Colors*/
+ 
   --green-50: #00d492;
   --green-100: #00bc7d;
   --green-200: rgba(48, 209, 88, 0.24);
   --green-300: rgba(42, 173, 75, 0.2);
-  --green-400: #30d158; /* DÜZELTİLDİ */
+  --green-400: #30d158;  
 
-  /* Red Colors*/
+ 
   --red-50: #ff637e;
   --red-100: #ff2056;
   --red-200: rgba(255, 59, 48, 0.2);
   --red-300: #ff3b30;
 
-  /* Base Colors */
+ 
   --black: #222;
   --white: #ffffff;
 
-  /* Layout */
+ 
   --backgroundColor: var(--grey-50);
   --borderRadius-50: 0.6rem;
   --borderRadius-100: 1rem;
@@ -106,14 +106,14 @@ html {
   --fixed-width: 900px;
   --view-width: 90vw;
 
-  /* Shadows */
+ 
   --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
   --shadow-2: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
   --shadow-3: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
   --shadow-4: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
 }
 
-/* Base Body */
+ 
 body {
   background: var(--backgroundColor);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -291,7 +291,7 @@ color: var(--grey-500);
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  /* max-width:1120px; */
+  
   width: var(--view-width);
   gap:3rem;
 }
@@ -398,12 +398,12 @@ background: linear-gradient(45deg, var(--red-50), var(--red-100));
   transform: translateY(-4px);
   box-shadow: var(--shadow-3);
 }
-/* Loading Spinner */
+ 
 .loading-spinner {
   display: none;
   color: var(--primary-100);
   font-size: 1rem;
-  margin: 40px 0;
+  margin: 60px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -423,7 +423,7 @@ background: linear-gradient(45deg, var(--red-50), var(--red-100));
   font-weight: 600;
   padding: 1rem 0;
 }
-/* Loading spin animation */
+/* Loading spin animasyonu */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -439,7 +439,7 @@ background: linear-gradient(45deg, var(--red-50), var(--red-100));
   margin-top: 1rem;
 }
 
-/* kard stili */
+ 
 
 .product-card {
   width: var(--view-width);
@@ -458,7 +458,7 @@ background: linear-gradient(45deg, var(--red-50), var(--red-100));
   box-shadow: var(--shadow-4);
 }
 
-/* ürün görseli */
+ 
 .product-image {
   height: 200px;
   overflow: hidden;
@@ -501,7 +501,7 @@ background: linear-gradient(45deg, var(--red-50), var(--red-100));
   font-size: var(--small-text);
 }
 
-/* ürün bilgileri */
+ 
 .product-info {
   padding: 0.825rem 1.125rem;
   display: flex;
@@ -564,7 +564,7 @@ background: linear-gradient(45deg, var(--red-50), var(--red-100));
   padding-left: 0.2rem;
 }
 
-/* Slider Style */
+ 
 .slider {
   display: flex;
   gap: 1rem;
@@ -790,7 +790,7 @@ cursor: not-allowed;
 
 
 
-/* Success Message */
+ 
 
 .message {
   position: fixed;
@@ -891,6 +891,55 @@ cursor: not-allowed;
   cursor: not-allowed;
   opacity: 0.8; 
 }
+.site-footer {
+ display: none;
+width: 100%;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  border-top: 1px solid var(--grey-50);
+  background-color: var(--grey-200);
+}
+
+.footer-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.footer-content p {
+  color: var(--grey-600);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-content a {
+  color: var(--primary-100);
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.footer-content a:hover {
+  color: var(--clr-grey-10);
+  text-decoration: underline;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+}
+
+.social-icon i {
+  font-size: 1.5rem;
+  color: var(--clr-grey-10);
+  transition: var(--transition);
+}
+
+.social-icon:hover i {
+  color: var(--clr-red-dark);
+  transform: translateY(-2px);
+}
 @media screen and (min-width: 768px) {
   .product-list {
     grid-template-columns: repeat(2, 1fr);
@@ -929,7 +978,7 @@ cursor: not-allowed;
                  <p class="navbar-title"> Shop<span>Sayar</span></p> 
            <!-- Product search input area -->
                  <div class="search-product">
-                     <input placeholder="Search product product for ID" type="text" id="product-input" class="input-product"/>
+                     <input placeholder="Search for a product by its ID" type="text" id="product-input" class="input-product"/>
                      <div class="search-result-product">
                         <p class="loading-search">Loading....</p>
                         <!-- Search results will be displayed here -->
@@ -1010,23 +1059,42 @@ cursor: not-allowed;
               
        
     </div>
+     <footer class="site-footer">
+        <div class="footer-content">
+            <p>
+               Designer Portfolio  
+                <a href="https://tasarimci-portfoy.com" target="_blank">Musa Sayar</a>
+            </p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/musasayar/" target="_blank" class="social-icon"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/musayar9" target="_blank" class="social-icon"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://medium.com/@musasayar67" target="_blank" class="social-icon"><i
+                        class="fab fa-medium"></i></a>
+            </div>
+            <p>&copy; 2025 ShopSayar. All rights reserved   </p>
+        </div>
+    </footer>
     `);
     const loading = $("#loading");
-    const basketAndFavorite = $(".basketAndFavorite"); $(".emptyToBasket").hide();
+    const basketAndFavorite = $(".basketAndFavorite");
+    $(".emptyToBasket").hide();
     $(".emptyToFavorite").hide();
     $(".countSumTotal").hide();
-    
+
     let basketProducts = localStorage.getItem("basketProducts")
       ? JSON.parse(localStorage.getItem("basketProducts"))
       : [];
-  // loading animaiton con 
-    let cloneProduct = null; 
+    // loading animaiton con
+    let cloneProduct = null;
     function hideLoading() {
       loading.hide();
       basketAndFavorite.show();
       $(".page-title").show();
       $(".slider-head").show();
-      $(".product-head").show();
+      $(".product-head").show()
+       $(".site-footer").show()
     }
     function showLoading() {
       loading.show();
@@ -1034,6 +1102,7 @@ cursor: not-allowed;
       $(".page-title").hide();
       $(".slider-head").hide();
       $(".product-head").hide();
+          $(".site-footer").hide()
     }
     function removeLocalStorage() {
       localStorage.removeItem("basketProducts");
@@ -1051,7 +1120,7 @@ cursor: not-allowed;
         }, wait);
       };
     }
-  // Function to  the success message toastify
+    // Function to  the success message toastify
     function successMessageToastify(message) {
       const div = $("<div></div>");
       const icons = $("<i></i>").addClass("fa-solid fa-check");
@@ -1102,13 +1171,12 @@ cursor: not-allowed;
       errorMessageToastify(errorMsg);
     }
 
-   
     //  fetching product details based on ID using the search input.
     $("#product-input").on(
       "input",
       debounce(function () {
         const searchValue = $(this).val().trim();
-        $(this).focus().next().show();
+        $(this).focus().next().slideDown("fast");
         if (searchValue !== "" && Number(searchValue)) {
           $.ajax({
             url: `https://fakestoreapi.com/products/${searchValue}`,
@@ -1138,17 +1206,21 @@ cursor: not-allowed;
               }
             },
             error: function (xhr, status, error) {
-              errorMessage(xhr);
+              errorMessage(xhr); 
+                    basketAndFavorite.hide();
+      $(".page-title").hide();
+      $(".slider-head").hide();
+      $(".product-head").hide();
             },
           });
         } else {
-          $(this).focus().next().hide();
+          $(this).focus().next().slideUp("fast");
         }
       }, 500)
     );
-// Fetch Products
-    fetchProducts() 
-     function fetchProducts() {
+    // Fetch Products
+    fetchProducts();
+    function fetchProducts() {
       $.ajax({
         url: `https://fakestoreapi.com/products`,
         method: "GET",
@@ -1159,7 +1231,7 @@ cursor: not-allowed;
         },
         success: function (products) {
           hideLoading();
-          
+
           let productsData = "";
           if (products && products.length > 0) {
             products.forEach(function (product) {
@@ -1184,7 +1256,7 @@ cursor: not-allowed;
                     </div>
             `;
             });
-            $(".product-list").append(productsData); 
+            $(".product-list").append(productsData);
             // "Entry animation added to product cards."
             $(".product-card").each(function (index) {
               $(this)
@@ -1210,11 +1282,9 @@ cursor: not-allowed;
               const productId = $(this).data("id");
               fetchDetailProduct(productId);
             });
-//"Configuration of adding product to basket and cloning product card."
+            //"Configuration of adding product to basket and cloning product card."
             $(".product-card").on("click", ".addToBasket", function (e) {
-              const productId = $(this).closest(".product-card").data("id");
-
-              const findProduct = products.find((p) => p.id === productId);
+         
 
               const cloneElement = $(this).closest(".product-card").clone(true);
               $(".empty-basket-list").hide();
@@ -1234,7 +1304,7 @@ cursor: not-allowed;
                 .attr("disabled", true)
                 .text("Product is in the basket");
             });
-          // "Clear basket button."
+            // "Clear basket button."
             $(".emptyToBasket").click(function () {
               $(".basket-list").empty();
               $(".empty-basket-list").show();
@@ -1248,11 +1318,9 @@ cursor: not-allowed;
                 .attr("disabled", false)
                 .addClass("addToBasket")
                 .text("Add basket");
-            }); 
-          //  Add to favorites button.
+            });
+            //  Add to favorites button.
             $(".product-card").on("click", ".favorite-btn", function (e) {
-               
-          
               const cloneFavorite = $(this)
                 .closest(".product-card")
                 .clone(true);
@@ -1263,14 +1331,15 @@ cursor: not-allowed;
               $(".emptyToFavorite").show();
 
               $(this).find(".fa-heart").addClass("active");
-              $(this).attr("disabled",true)
+              $(this).attr("disabled", true);
               $(".favorite-list").append(cloneFavorite);
               successMessageToastify("Product added to favorite");
             });
-           // Clear favorite button.
+            // Clear favorite button.
             $(".emptyToFavorite").click(function () {
               $(".favorite-list").empty();
-              $(".empty-favorite-list").show();  $(".favorite-btn").attr("disabled",  false)
+              $(".empty-favorite-list").show();
+              $(".favorite-btn").attr("disabled", false);
               $(this).hide();
               $(".favorite-btn").find(".fa-heart").removeClass("active");
               successMessageToastify("Your favorite field is now empty");
@@ -1323,6 +1392,10 @@ cursor: not-allowed;
           hideLoading();
           errorMessage(xhr);
           successMessageHide();
+          basketAndFavorite.hide();
+          $(".page-title").hide();
+          $(".slider-head").hide();
+          $(".product-head").hide();
         },
       });
     }
@@ -1334,11 +1407,11 @@ cursor: not-allowed;
         method: "GET",
         dataType: "json",
         timeout: 10000,
-  
+
         success: function (product) {
           if (product) {
             hideLoading();
-            console.log("product", product);
+        
 
             Fancybox.show([
               {
