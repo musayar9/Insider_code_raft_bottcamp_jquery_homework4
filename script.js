@@ -183,7 +183,20 @@ ul {
   
   }
   
-  
+  .navbar-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--grey-600);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.navbar-links p:hover {
+  transform: scale(1.05);
+  font-weight: 600;
+}
   .search-product {
     width: 600px;
     position: relative;
@@ -221,6 +234,11 @@ color: var(--grey-500);
     box-shadow: var(--shadow-2);
   }
   
+  .loading-search {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--primary-100);
+}
   .search-product-item {
     display: flex;
     align-items: start;
@@ -417,7 +435,6 @@ background: linear-gradient(45deg, var(--red-50), var(--red-100));
 
 .product-list {
   display: grid;
-  /* grid-template-columns: repeat(4, 1fr); */
   gap: 1rem; 
   margin-top: 1rem;
 }
@@ -905,27 +922,31 @@ cursor: not-allowed;
 
     $("body").html(`
     
-    
+    <!-- Navbar -->
           <header class="navbar">
-                 <p class="navbar-title"> Shop<span>Sayar</span></p>
+                 <p class="navbar-title"> Shop<span>Sayar</span></p> 
+           <!-- Product search input area -->
                  <div class="search-product">
                      <input placeholder="Search product product for ID" type="text" id="product-input" class="input-product"/>
                      <div class="search-result-product">
                         <p class="loading-search">Loading....</p>
-                        <div class="search-result"></div>
+                        <!-- Search results will be displayed here -->
+                         <div class="search-result"></div>
                      </div>
                  </div>
-                 <div>
-                     <i class="fa-solid fa-basket-shopping"></i>
-                 </div>
+                   <div class="navbar-links">
+              <p> <i class="fa-solid fa-basket-shopping"></i> Basket </p>
+              <p> <i class="fa-solid fa-heart"></i>  Favorite </p>
+
+        </div>
           </header>
            <div class="container">
           
                <div class="page-title">
                    <h1>Shop<span>Sayar</span></h1>
-                   <p>Elevate Your Everyday with Shop Sayar.</p>
+                   <p>Elevate Your Everyday with Shop Sayar </p>
               </div>
-              
+                <!-- Loading spinner shown while products are loading -->
               <div class="loading-spinner" id="loading">
                  <div class="spinner-animation"></div>
                  <p>Loading...</p>
@@ -933,14 +954,20 @@ cursor: not-allowed;
               
               <div class="container-layout">
                 <div class="products-wrapper">
+                   <!--  Slider area -->
                   <h2 class="slider-head">Most Purchased Products</h2>
                    <div class="slider"></div>
+                      <!-- Error message area -->
                     <div id="error-message-content"></div>
+                     <!-- Product list section -->
                     <h2 class="product-head">Product List</h2>
                    <div class="product-list"></div>
                 </div>
+                
+        <!-- Basket and Favorite section -->
                 <div class="basketAndFavorite">
-                <div class="product-basket">
+                 <!-- Basket area -->
+                <div  id="product-basket"  class="product-basket">
                     <div class="basket-header">
                         <h3>My Basket</h3>
                         <i class="fa-solid fa-basket-shopping"></i>
@@ -961,7 +988,7 @@ cursor: not-allowed;
                     </div>
                     <button class="emptyToBasket">Empty Basket</button>
                 </div>
-
+     <!-- Favorite area -->
                 <div class="favorite-content">
                     <div class="favorite-header">
                         <h3>My Favorites</h3>
@@ -983,13 +1010,15 @@ cursor: not-allowed;
     </div>
     `);
     const loading = $("#loading");
-    const productBasket = $(".product-basket");
-    const basketAndFavorite = $(".basketAndFavorite");
+    const basketAndFavorite = $(".basketAndFavorite"); $(".emptyToBasket").hide();
+    $(".emptyToFavorite").hide();
+    $(".countSumTotal").hide();
+    
     let basketProducts = localStorage.getItem("basketProducts")
       ? JSON.parse(localStorage.getItem("basketProducts"))
       : [];
-
-    let cloneProduct = null;
+  // loading animaiton con 
+    let cloneProduct = null; 
     function hideLoading() {
       loading.hide();
       basketAndFavorite.show();
@@ -1020,7 +1049,7 @@ cursor: not-allowed;
         }, wait);
       };
     }
-
+  // Function to  the success message toastify
     function successMessageToastify(message) {
       const div = $("<div></div>");
       const icons = $("<i></i>").addClass("fa-solid fa-check");
@@ -1071,10 +1100,8 @@ cursor: not-allowed;
       errorMessageToastify(errorMsg);
     }
 
-    $(".emptyToBasket").hide();
-    $(".emptyToFavorite").hide();
-    $(".countSumTotal").hide();
-    // seach ınput
+   
+    //  fetching product details based on ID using the search input.
     $("#product-input").on(
       "input",
       debounce(function () {
@@ -1117,9 +1144,9 @@ cursor: not-allowed;
         }
       }, 500)
     );
-
-    fetchProducts();
-    function fetchProducts() {
+// Fetch Products
+    fetchProducts() 
+     function fetchProducts() {
       $.ajax({
         url: `https://fakestoreapi.com/products`,
         method: "GET",
@@ -1130,7 +1157,7 @@ cursor: not-allowed;
         },
         success: function (products) {
           hideLoading();
-          console.log("product", products);
+          
           let productsData = "";
           if (products && products.length > 0) {
             products.forEach(function (product) {
@@ -1155,7 +1182,8 @@ cursor: not-allowed;
                     </div>
             `;
             });
-            $(".product-list").append(productsData);
+            $(".product-list").append(productsData); 
+            // "Entry animation added to product cards."
             $(".product-card").each(function (index) {
               $(this)
                 .delay(100 * index)
@@ -1175,11 +1203,12 @@ cursor: not-allowed;
                 $(this).fadeTo("fast", "1").removeClass("addToBasket-hover");
               }
             );
+            // "View product details by ID."
             $(".product-view-detail").click(function () {
               const productId = $(this).data("id");
               fetchDetailProduct(productId);
             });
-
+//"Configuration of adding product to basket and cloning product card."
             $(".product-card").on("click", ".addToBasket", function (e) {
               const productId = $(this).closest(".product-card").data("id");
 
@@ -1203,7 +1232,7 @@ cursor: not-allowed;
                 .attr("disabled", true)
                 .text("Product is in the basket");
             });
-
+          // "Clear basket button."
             $(".emptyToBasket").click(function () {
               $(".basket-list").empty();
               $(".empty-basket-list").show();
@@ -1217,10 +1246,11 @@ cursor: not-allowed;
                 .attr("disabled", false)
                 .addClass("addToBasket")
                 .text("Add basket");
-            });
+            }); 
+          //  Add to favorites button.
             $(".product-card").on("click", ".favorite-btn", function (e) {
-              const productId = $(this).closest(".product-card").data("id");
-              console.log("productId", productId);
+               
+          
               const cloneFavorite = $(this)
                 .closest(".product-card")
                 .clone(true);
@@ -1234,7 +1264,7 @@ cursor: not-allowed;
               $(".favorite-list").append(cloneFavorite);
               successMessageToastify("Product added to favorite");
             });
-
+           // Clear favorite button.
             $(".emptyToFavorite").click(function () {
               $(".favorite-list").empty();
               $(".empty-favorite-list").show();
@@ -1294,16 +1324,14 @@ cursor: not-allowed;
       });
     }
 
-    // Get Detail Modal
+    // Open  Detail Modal
     function fetchDetailProduct(productId) {
       $.ajax({
         url: `https://fakestoreapi.com/products/${productId}`,
         method: "GET",
         dataType: "json",
         timeout: 10000,
-        beforeSend: function () {
-          // showLoading();
-        },
+  
         success: function (product) {
           if (product) {
             hideLoading();
@@ -1340,7 +1368,7 @@ cursor: not-allowed;
       });
     }
 
-    // Plugin
+    // Plugin - A custom jQuery plugin was created here to add products to the basket.
     (function ($) {
       $.fn.addBasketProduct = function (options) {
         const settings = $.extend(
