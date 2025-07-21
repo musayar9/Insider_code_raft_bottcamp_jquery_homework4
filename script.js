@@ -888,6 +888,8 @@ cursor: not-allowed;
 .favorite-btn .fa-heart.active {
   border: 1px solid var(--red-100);
   color: var(--red-100);
+  cursor: not-allowed;
+  opacity: 0.8; 
 }
 @media screen and (min-width: 768px) {
   .product-list {
@@ -1261,13 +1263,14 @@ cursor: not-allowed;
               $(".emptyToFavorite").show();
 
               $(this).find(".fa-heart").addClass("active");
+              $(this).attr("disabled",true)
               $(".favorite-list").append(cloneFavorite);
               successMessageToastify("Product added to favorite");
             });
            // Clear favorite button.
             $(".emptyToFavorite").click(function () {
               $(".favorite-list").empty();
-              $(".empty-favorite-list").show();
+              $(".empty-favorite-list").show();  $(".favorite-btn").attr("disabled",  false)
               $(this).hide();
               $(".favorite-btn").find(".fa-heart").removeClass("active");
               successMessageToastify("Your favorite field is now empty");
