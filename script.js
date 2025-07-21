@@ -541,6 +541,12 @@ color: var(--grey-500);
   position: relative;
 }
 
+.slider .product-image .product-rating {
+  font-size: 0.675rem;
+  padding: 0.575rem;
+}
+
+
 .slider .product-info h3 {
   height: 1.8rem;
   font-size: 0.875rem;
@@ -770,6 +776,34 @@ border-radius: var(--borderRadius-50);
   border: 1px solid var(--red-300);
   color: var(--grey-700);
 }
+.product-head,
+.slider-head {
+  font-weight: 500;
+  color: var(--grey-600);
+  font-size: 2rem;
+}
+
+.slider-head {
+  margin-bottom: 1rem;
+}
+.product-head {
+  margin-top: 2rem;
+  margin-bottom: -0.5rem;
+}
+
+.countSumTotal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-top: 1px solid var(--grey-100);
+  color: var(grey-600);
+  font-weight: 500;
+}
+.sumTotal {
+  font-weight: 600;
+  color: var(--primary-100);
+}
 
 
 @media screen and (min-width: 768px) {
@@ -787,6 +821,7 @@ border-radius: var(--borderRadius-50);
 
   .product-basket {
     grid-column: 4 / span 1;
+       margin-top: 2.8rem;
     
   }
 }
@@ -804,58 +839,58 @@ border-radius: var(--borderRadius-50);
     
     
           <header class="navbar">
-        <p class="navbar-title"> Shop<span>Sayar</span></p>
-  
-       <div class="search-product">
-        <input placeholder="Search product product for ID" type="text" id="product-input" class="input-product"/>
-       
-       <div class="search-result-product">
-       <p class="loading-search">Loading....</p>
-  <div class="search-result"></div>
-       </div>
-       </div>
-       <div>
-        <i class="fa-solid fa-basket-shopping"></i>
-       </div>
-  </header>
-    
-    
-    
-     <div class="container">
-    
-         <div class="page-title">
-        <h1>Shop<span>Sayar</span></h1>
-        <p>Elevate Your Everyday with Shop Sayar.</p>
-        </div>
-        
-        <div class="loading-spinner" id="loading">
-        <div class="spinner-animation"></div>
-        <p>Loading...</p>
-        </div>
-        
-        <div class="container-layout">
-          <div class="products-wrapper">
-             <div class="slider"></div>
+                 <p class="navbar-title"> Shop<span>Sayar</span></p>
+                 <div class="search-product">
+                     <input placeholder="Search product product for ID" type="text" id="product-input" class="input-product"/>
+                     <div class="search-result-product">
+                        <p class="loading-search">Loading....</p>
+                        <div class="search-result"></div>
+                     </div>
+                 </div>
+                 <div>
+                     <i class="fa-solid fa-basket-shopping"></i>
+                 </div>
+          </header>
+           <div class="container">
           
-            <div class="product-list"></div>
-            </div>
-            <div class="product-basket">
-              <div class="basket-header">
-               <h3>Sepetim</h3>
-              <i class="fa-solid fa-basket-shopping"></i>
+               <div class="page-title">
+                   <h1>Shop<span>Sayar</span></h1>
+                   <p>Elevate Your Everyday with Shop Sayar.</p>
               </div>
-                  <div class="empty-basket-list">
-                 <i class="fa-solid fa-basket-shopping"></i>
-               <p>Your basket is empty</p>
-        </div>
-        
- 
-             <div class="basket-list"></div>
-                   
-             <button class="emptyToBasket">Empty Basket</button>
-            </div>
-        </div>
-        
+              
+              <div class="loading-spinner" id="loading">
+                 <div class="spinner-animation"></div>
+                 <p>Loading...</p>
+              </div>
+              
+              <div class="container-layout">
+                <div class="products-wrapper">
+                  <h2 class="slider-head">Most Purchased Products</h2>
+                   <div class="slider"></div>
+                    <div id="error-message-content"></div>
+                    <h2 class="product-head">Product List</h2>
+                   <div class="product-list"></div>
+                </div>
+                  <div class="product-basket">
+                    <div class="basket-header">
+                      <h3>My Basket</h3>
+                      <i class="fa-solid fa-basket-shopping"></i>
+                    </div>
+                     <div class="empty-basket-list">
+                       <i class="fa-solid fa-basket-shopping"></i>
+                       <p>Your basket is empty</p>
+                    </div>
+                   <div class="basket-list"></div>
+                   <div class="countSumTotal">
+                      <p class="sumTotalHead">Total Price:</p>
+                      <p class="sumTotal">0</p>
+                    </div>
+                   <button class="emptyToBasket">Empty Basket</button>
+                    </div>
+                    
+                  </div>
+              </div>
+              
        
     </div>
     `);
@@ -869,13 +904,20 @@ border-radius: var(--borderRadius-50);
     function hideLoading() {
       loading.hide();
       productBasket.show();
+      $(".page-title").show();
+      $(".slider-head").show();
+      $(".product-head").show();
     }
     function showLoading() {
       loading.show();
       productBasket.hide();
+      $(".page-title").hide();
+      $(".slider-head").hide();
+      $(".product-head").hide();
     }
     function removeLocalStorage() {
       localStorage.removeItem("basketProducts");
+      basketProducts = [];
     }
     // Debounce fonksiyonu
     function debounce(func, wait) {
@@ -889,12 +931,8 @@ border-radius: var(--borderRadius-50);
         }, wait);
       };
     }
-    
-    
-    
-    
-    
-        function successMessageToastify(message) {
+
+    function successMessageToastify(message) {
       const div = $("<div></div>");
       const icons = $("<i></i>").addClass("fa-solid fa-check");
       div
@@ -944,13 +982,8 @@ border-radius: var(--borderRadius-50);
       errorMessageToastify(errorMsg);
     }
 
-    
-    
-    
-    
-    
     $(".emptyToBasket").hide();
-
+    $(".countSumTotal").hide();
     // seach ınput
     $("#product-input").on(
       "input",
@@ -984,7 +1017,8 @@ border-radius: var(--borderRadius-50);
               `;
                 $(".search-result").append(searchProduct);
               }
-            },error: function (xhr, status, error) {
+            },
+            error: function (xhr, status, error) {
               errorMessage(xhr);
             },
           });
@@ -1054,23 +1088,22 @@ border-radius: var(--borderRadius-50);
             });
 
             $(".product-card").on("click", ".addToBasket", function (e) {
-              console.log(e.target);
-
               const productId = $(this).closest(".product-card").data("id");
-              console.log("productId", productId);
+
               const findProduct = products.find((p) => p.id === productId);
-              console.log("product", findProduct);
+
               const cloneElement = $(this).closest(".product-card").clone(true);
               $(".empty-basket-list").hide();
               $(".emptyToBasket").show();
+              $(".countSumTotal").show();
               cloneElement.find(".addToBasket").remove();
-                 successMessageToastify("Product added to basket");
+              successMessageToastify("Product added to basket");
               $(".basket-list").addBasketProduct({
                 product: findProduct,
                 element: cloneElement,
               });
 
-            $(this)
+              $(this)
                 .removeClass("addToBasket")
                 .addClass("productInBasket")
                 .attr("disabled", true)
@@ -1082,10 +1115,12 @@ border-radius: var(--borderRadius-50);
               $(".empty-basket-list").show();
               $(this).hide();
               removeLocalStorage();
- successMessageToastify("Your cart is now empty");
+              successMessageToastify("Your cart is now empty");
+              $(".countSumTotal").hide();
+              $(".sumTotal").text = "0,00$";
               $(".productInBasket")
                 .removeClass("productInBasket")
-                 .attr("disabled", false)
+                .attr("disabled", false)
                 .addClass("addToBasket")
                 .text("Add basket");
             });
@@ -1134,7 +1169,7 @@ border-radius: var(--borderRadius-50);
         error: function (xhr, status, error) {
           hideLoading();
           errorMessage(xhr);
-           successMessageHide();
+          successMessageHide();
         },
       });
     }
@@ -1205,11 +1240,17 @@ border-radius: var(--borderRadius-50);
         localStorage.setItem("basketProducts", JSON.stringify(basketProducts));
 
         $(".basket-list").append(settings.element);
+        const total = basketProducts.reduce((sum, item) => {
+          return sum + (parseFloat(item.price) || 0);
+        }, 0);
+
+        $(".sumTotal").text(total.toFixed(2) + " $");
 
         return this;
       };
     })(jQuery);
   } catch (err) {
     console.error("Hata", err);
+    errorMessageToastify("Bir hata oluştu");
   }
 })();
