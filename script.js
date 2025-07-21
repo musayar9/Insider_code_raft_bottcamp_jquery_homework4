@@ -248,6 +248,7 @@ color: var(--grey-500);
   
   .page-title{
   align-content: flex-start;
+  display: none;
   
   
   }
@@ -289,7 +290,7 @@ color: var(--grey-500);
 
 
 
-.product-basket {
+.product-basket, .favorite-content {
   grid-column: 1 / -1;
   width: 100%;
   background-color: white;
@@ -300,24 +301,35 @@ color: var(--grey-500);
   box-shadow: var(--shadow-2);
 }
 
-.product-basket .basket-header {
+.favorite-content {
+  margin-top: 1rem;
+}
+
+.product-basket .basket-header,
+.favorite-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-   padding: 1rem;
+  padding: 1rem;
 }
 
-.basket-header h3 {
+.basket-header h3,
+.favorite-header h3 {
   font-weight: 500;
   font-size: 1.5rem;
 }
-.basket-header .fa-basket-shopping {
+
+.basket-header .fa-basket-shopping,
+.favorite-header .fa-heart {
   font-size: 1.5rem;
 }
 
+.fa-heart {
+  color: var(--red-100);
+}
 
 
-.empty-basket-list {
+.empty-basket-list, .empty-favorite-list {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -325,18 +337,21 @@ color: var(--grey-500);
   gap: 1rem;
   height: 25vh;
 }
-.empty-basket-list .fa-basket-shopping {
+.empty-basket-list .fa-basket-shopping,
+.empty-favorite-list .fa-heart {
   font-size: 3rem;
 }
 
-.empty-basket-list p {
+.empty-basket-list p,
+.empty-favorite-list p {
   font-size: 1.5rem;
   font-weight: 500;
   color: var(--grey-500);
 }
 
-.emptyToBasket {
-  background: linear-gradient(45deg, var(--red-50), var(--red-100));
+.emptyToBasket,
+.emptyToFavorite {
+  
   border-radius: var(--borderRadius-50);
   color: var(--white);
   padding: 0.55rem;
@@ -346,13 +361,25 @@ color: var(--grey-500);
   transition: (--transition);
   cursor: pointer;
 }
+.emptyToBasket{
+background: linear-gradient(45deg, var(--red-50), var(--red-100));
+
+}
+
+.emptyToFavorite {
+  background: linear-gradient(45deg, var(--primary-50), var(--primary-100));
+}
+.emptyToFavorite:hover {
+  background: linear-gradient(45deg, var(--primary-100), var(--primary-200));
+  transform: translateY(4px);
+  box-shadow: var(--shadow-2);
+}
 
 .emptyToBasket:hover {
   background: linear-gradient(45deg, var(--red-100), var(--red-50));
   transform: translateY(-4px);
   box-shadow: var(--shadow-3);
 }
-
 /* Loading Spinner */
 .loading-spinner {
   display: none;
@@ -646,12 +673,7 @@ color: var(--grey-500);
   color: var(--grey-500);
 }
 
-.basket-list {
-  display: flex;
-  flex-direction: column;
-  height: min-content;
 
-}
 .productInBasket {
   margin-top: 0.5rem;
   padding: 0.625rem;
@@ -667,9 +689,15 @@ color: var(--grey-500);
 opacity: 0.4;
 cursor: not-allowed;
 }
-.basket-list .product-card {
-   width: 100%;
-  height:120px;
+.basket-list, .favorite-list {
+  display: flex;
+  flex-direction: column;
+  height: min-content;
+}
+
+.basket-list .product-card, .favorite-list .product-card {
+  width: 100%;
+  height: 120px;
   overflow: auto;
   display: flex;
   align-items: center;
@@ -679,15 +707,14 @@ cursor: not-allowed;
   /* border-bottom: 1px solid var(--grey-400); */
   box-shadow: none;
   border-radius: none;
-position: relative;
-    display: flex;
+  position: relative;
+  display: flex;
   gap: 0.1rem;
   align-items: center;
-
 }
 
-.basket-list .product-image {
-  flex-shrink: 0; 
+.basket-list .product-image, .favorite-list .product-image {
+  flex-shrink: 0;
   width: 5rem;
   height: 5rem;
   display: flex;
@@ -698,30 +725,31 @@ position: relative;
   position: relative;
 }
 
-.basket-list .product-image img {
+.basket-list .product-image img, .favorite-list .product-image img {
   width: 4rem;
-  height:4rem;
+  height: 4rem;
   padding: 0.3rem;
   object-fit: center;
   transition: all 0.5s;
-border-radius: var(--borderRadius-50);
+  border-radius: var(--borderRadius-50);
   border: 1px solid var(--grey-400);
   box-shadow: var(--shadow-3);
   transform: var(--transition);
 }
 
-.basket-list .product-rating {
+.basket-list .product-rating, .favorite-list .product-rating {
   display: none;
 }
 
-.basket-list .product-info {
+.basket-list .product-info, .favorite-list .product-info {
   padding: 0.625rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;flex-grow: 1;
+  gap: 0.1rem;
+  flex-grow: 1;
 }
 
-.basket-list .product-info h3 {
+.basket-list .product-info h3 , .favorite-list .product-info h3{
   font-weight: 600;
   color: var(--grey-600);
   height: 2rem;
@@ -733,18 +761,17 @@ border-radius: var(--borderRadius-50);
   font-size: 1rem;
   color: var(--grey-700);
   font-weight: 500;
- 
-
 }
 
-
-.basket-list .addToBasket {
+.basket-list .addToBasket, .favorite-list .addToBasket {
   font-size: 0.675rem;
   width: max-content;
   position: absolute;
   right: 1rem;
   top: 4rem;
 }
+
+
 
 /* Success Message */
 
@@ -757,6 +784,7 @@ border-radius: var(--borderRadius-50);
   font-size: 1rem;
   border-radius: var(--borderRadius-50);
   box-shadow: var(--shadow-2);
+  z-index:1;
 }
 
 .success-message {
@@ -781,6 +809,7 @@ border-radius: var(--borderRadius-50);
   font-weight: 500;
   color: var(--grey-600);
   font-size: 2rem;
+    display: none;
 }
 
 .slider-head {
@@ -805,7 +834,44 @@ border-radius: var(--borderRadius-50);
   color: var(--primary-100);
 }
 
+.favorite-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--white);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.favorite-btn .fa-heart {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--grey-300);
+  padding: 0.5rem;
+  font-size: 1rem;
+  color: var(--grey-300);
+}
+
+.favorite-btn:hover,
+.favorite-btn .fa-heart:hover {
+  color: var(--red-100);
+  transform: translateY(-2px);
+}
+.favorite-btn .fa-heart:hover {
+  border: 1px solid var(--red-100);
+}
+
+.favorite-btn .fa-heart.active {
+  border: 1px solid var(--red-100);
+  color: var(--red-100);
+}
 @media screen and (min-width: 768px) {
   .product-list {
     grid-template-columns: repeat(2, 1fr);
@@ -819,10 +885,12 @@ border-radius: var(--borderRadius-50);
     grid-column: 1 / span 3;
   }
 
-  .product-basket {
+  .basketAndFavorite {
+    margin-top: 2.8rem;
     grid-column: 4 / span 1;
-       margin-top: 2.8rem;
-    
+    display: none;
+
+    /* height: 200px; */
   }
 }
 
@@ -871,24 +939,44 @@ border-radius: var(--borderRadius-50);
                     <h2 class="product-head">Product List</h2>
                    <div class="product-list"></div>
                 </div>
-                  <div class="product-basket">
+                <div class="basketAndFavorite">
+                <div class="product-basket">
                     <div class="basket-header">
-                      <h3>My Basket</h3>
-                      <i class="fa-solid fa-basket-shopping"></i>
+                        <h3>My Basket</h3>
+                        <i class="fa-solid fa-basket-shopping"></i>
                     </div>
-                     <div class="empty-basket-list">
-                       <i class="fa-solid fa-basket-shopping"></i>
-                       <p>Your basket is empty</p>
+
+                    <div class="empty-basket-list">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <p>Your basket is empty</p>
                     </div>
-                   <div class="basket-list"></div>
-                   <div class="countSumTotal">
-                      <p class="sumTotalHead">Total Price:</p>
-                      <p class="sumTotal">0</p>
+
+
+                    <div class="basket-list">
+
                     </div>
-                   <button class="emptyToBasket">Empty Basket</button>
+                    <div class="countSumTotal">
+                        <p class="sumTotalHead">Total Price:</p>
+                        <p class="sumTotal">0</p>
                     </div>
-                    
-                  </div>
+                    <button class="emptyToBasket">Empty Basket</button>
+                </div>
+
+                <div class="favorite-content">
+                    <div class="favorite-header">
+                        <h3>My Favorites</h3>
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <div class="empty-favorite-list">
+                        <i class="fa-solid fa-heart"></i>
+                        <p>Your favorite is empty</p>
+                    </div>
+                    <div class="favorite-list"></div>
+
+                    <button class="emptyToFavorite">Empty Favorite</button>
+                </div>
+
+            </div>
               </div>
               
        
@@ -896,6 +984,7 @@ border-radius: var(--borderRadius-50);
     `);
     const loading = $("#loading");
     const productBasket = $(".product-basket");
+    const basketAndFavorite = $(".basketAndFavorite");
     let basketProducts = localStorage.getItem("basketProducts")
       ? JSON.parse(localStorage.getItem("basketProducts"))
       : [];
@@ -903,14 +992,14 @@ border-radius: var(--borderRadius-50);
     let cloneProduct = null;
     function hideLoading() {
       loading.hide();
-      productBasket.show();
+      basketAndFavorite.show();
       $(".page-title").show();
       $(".slider-head").show();
       $(".product-head").show();
     }
     function showLoading() {
       loading.show();
-      productBasket.hide();
+      basketAndFavorite.hide();
       $(".page-title").hide();
       $(".slider-head").hide();
       $(".product-head").hide();
@@ -983,6 +1072,7 @@ border-radius: var(--borderRadius-50);
     }
 
     $(".emptyToBasket").hide();
+    $(".emptyToFavorite").hide();
     $(".countSumTotal").hide();
     // seach ınput
     $("#product-input").on(
@@ -1049,6 +1139,9 @@ border-radius: var(--borderRadius-50);
                          <div class="product-image">
                             <img src="${product.image}" alt="${product.title}"/>
                             <div class="product-rating"><i class="fa-solid fa-star"></i> <span>${product.rating.rate}</span></div>
+                           <button class="favorite-btn">
+                              <i class="fa-solid fa-heart"> </i>
+                              </button>   
                          </div>
                          <div class="product-info">
                             <h3>${product.title}</h3>
@@ -1097,6 +1190,7 @@ border-radius: var(--borderRadius-50);
               $(".emptyToBasket").show();
               $(".countSumTotal").show();
               cloneElement.find(".addToBasket").remove();
+              cloneElement.find(".favorite-btn").remove();
               successMessageToastify("Product added to basket");
               $(".basket-list").addBasketProduct({
                 product: findProduct,
@@ -1124,9 +1218,35 @@ border-radius: var(--borderRadius-50);
                 .addClass("addToBasket")
                 .text("Add basket");
             });
+            $(".product-card").on("click", ".favorite-btn", function (e) {
+              const productId = $(this).closest(".product-card").data("id");
+              console.log("productId", productId);
+              const cloneFavorite = $(this)
+                .closest(".product-card")
+                .clone(true);
+              cloneFavorite.find(".favorite-btn").remove();
+              cloneFavorite.find(".addToBasket").remove();
+              cloneFavorite.find(".product-rating").remove();
+              $(".empty-favorite-list").hide();
+              $(".emptyToFavorite").show();
+
+              $(this).find(".fa-heart").addClass("active");
+              $(".favorite-list").append(cloneFavorite);
+              successMessageToastify("Product added to favorite");
+            });
+
+            $(".emptyToFavorite").click(function () {
+              $(".favorite-list").empty();
+              $(".empty-favorite-list").show();
+              $(this).hide();
+              $(".favorite-btn").find(".fa-heart").removeClass("active");
+              successMessageToastify("Your favorite field is now empty");
+            });
+
             // Clone Property
             cloneProduct = $(".product-card").clone(true);
             cloneProduct.find(".addToBasket").remove();
+            cloneProduct.find(".favorite-btn").remove();
             $(".slider").append(cloneProduct);
 
             $(".slider").slick({
